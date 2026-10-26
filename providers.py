@@ -593,7 +593,10 @@ def google_submit(cfg, model, prompt, opt, image):
     if image:
         inst["image"] = {"bytesBase64Encoded": image_b64(image), "mimeType": mimetypes.guess_type(image)[0] or "image/jpeg"}
     params = {"sampleCount": 1, "durationSeconds": int(opt.get("duration") or 8), "generateAudio": audio,
-              "personGeneration": "allow_adult", "enhancePrompt": bool(opt.get("optimizer"))}
+              "personGeneration": "allow_adult"}
+    # Veo 3 系列的提示词增强无法关闭（传 false 会报错），只有旧版才允许显式设置
+    if not mid.startswith("veo-3"):
+        params["enhancePrompt"] = bool(opt.get("optimizer"))
     if opt.get("ratio"):
         params["aspectRatio"] = opt["ratio"]
     if opt.get("resolution"):
