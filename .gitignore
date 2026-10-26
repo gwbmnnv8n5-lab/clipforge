@@ -1,0 +1,13 @@
+data/
+*.db
+secret.key
+*.pem
+*.key
+sa.json
+*service-account*.json
+.env
+*.env
+__pycache__/
+*.pyc
+.DS_Store
+*.zip
